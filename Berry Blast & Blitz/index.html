@@ -9,25 +9,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #1a3a8f;
-            --secondary-blue: #2a4dbe;
-            --light-blue: #4a7bff;
-            --dark-blue: #0a1c4d;
-            --accent-blue: #3a5fcd;
-            --white: #FFFFFF;
-            --light-gray: #f0f5ff;
-            --medium-gray: #e0e8ff;
+       :root {
+            --primary-blue: #2a0b8c;
+            --secondary-purple: #8a2be2;
+            --light-blue: #5d5fef;
+            --dark-purple: #4b0082;
+            --accent-color: #9370db;
+            --white: #ffffff;
+            --light-gray: #e0e0e0;
+            --medium-gray: #e0e0ff;
             --dark-gray: #424242;
             --text-color: #212121;
-            --shadow: 0 4px 20px rgba(10, 28, 77, 0.25);
+            --shadow: 0 4px 20px rgba(42, 11, 140, 0.25);
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --gradient: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            --gradient-hover: linear-gradient(135deg, #2a4dbe, #4a7bff);
-            --accent-pink: #ff5e94;
-            --accent-blue: #70adb8;
-            --accent-purple: #9d4edd;
-            --accent-yellow: #ffe066;
+            --gradient: linear-gradient(135deg, var(--primary-blue), var(--secondary-purple));
+            --gradient-hover: linear-gradient(135deg, #3a1bcc, #9a4bff);
+             --accent-pink: #ff5d93;
+              --accent-purple: #9d4edd;
+             --accent-yellow: #66d4ff;
+            --gradient-text: linear-gradient(45deg, #5d5fef, #9370db, #8a2be2);
+            --fire-color: linear-gradient(to top, #5d5fef, #9370db, #8a2be2);
+            --particle-color: #5d5fef;
         }
 
         * {
@@ -38,12 +40,13 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f0f5ff, #d6e4ff);
+                background: linear-gradient(135deg, #0a0e2a, #1a1240);
             color: var(--text-color);
             line-height: 1.7;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
+
         }
 
         body::before {
@@ -96,6 +99,7 @@
             color: white;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             letter-spacing: 1px;
+            animation: float 3s ease-in-out infinite;
         }
 
         .logo-text span {
@@ -109,13 +113,37 @@
         }
 
         .navItem img:hover {
-            transform: rotate(15deg);
+            height: 50px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            transition: transform 0.5s ease;
+            animation: spin 20s linear infinite;
+            transform: scale(1.1) rotate(15deg);
+        }
+    
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        logo-text span {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s ease infinite;
         }
 
         .search {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.534);
             border-radius: 30px;
             padding: 5px 15px;
             margin: 0 20px;
@@ -188,7 +216,7 @@
 
         .menuItem {
             margin: 0 18px;
-            font-size: 1.1rem;
+            font-size: 1.0rem;
             cursor: pointer;
             color: var(--dark-blue);
             position: relative;
@@ -196,6 +224,12 @@
             font-weight: 600;
             padding: 5px 10px;
             border-radius: 8px;
+            background: var(--gradient-text);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: #00129b;
+            animation: gradientText 3s ease infinite;
         }
 
         .menuItem:hover {
@@ -223,13 +257,13 @@
         /* Slider Styles */
         .slider {
             position: relative;
-            height: 75vh;
+            height: 70vh;
             overflow: hidden;
             margin: 30px auto;
-            max-width: 1400px;
+            max-width: 1000px;
             border-radius: 20px;
             box-shadow: var(--shadow);
-            perspective: 1200px;
+            perspective: 600px;
         }
 
         .sliderWrapper {
@@ -256,8 +290,8 @@
             object-fit: cover;
             position: absolute;
             z-index: 1;
-            transform: scale(1.05);
-            transition: transform 8s ease-out;
+            transform: scale(1.0);
+            transition: transform 5s ease-out;
         }
 
         .sliderItem:hover .sliderImg {
@@ -279,10 +313,10 @@
             z-index: 3;
             text-align: center;
             padding: 0 5%;
-            max-width: 800px;
+            max-width: 900px;
             transform: translateY(20px);
             opacity: 0;
-            transition: all 0.8s ease 0.2s;
+            transition: all 0.6s ease 0.2s;
         }
 
         .sliderItem.active .sliderContent {
@@ -292,7 +326,7 @@
 
         .sliderTitle {
             color: var(--white);
-            font-size: 3.8rem;
+            font-size: 3.25rem;
             font-weight: 800;
             text-shadow: 0 4px 15px rgba(0,0,0,0.3);
             margin-bottom: 20px;
@@ -322,7 +356,7 @@
             font-size: 2.8rem;
             margin-bottom: 35px;
             font-weight: 700;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.089);
             display: inline-block;
             padding: 10px 30px;
             border-radius: 50px;
@@ -402,7 +436,7 @@
             justify-content: space-around;
             flex-wrap: wrap;
             padding: 60px 5%;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.05);
             margin: 40px 5%;
             border-radius: 20px;
             box-shadow: var(--shadow);
@@ -438,13 +472,13 @@
 
         .feature {
             text-align: center;
-            width: 22%;
+            width: 27%;
             min-width: 200px;
-            padding: 35px 25px;
-            margin: 15px;
-            border-radius: 20px;
+            padding: 10px 10px;
+            margin: 10px;
+            border-radius: 10px;
             transition: var(--transition);
-            background: rgba(240, 245, 255, 0.7);
+            background: rgba(217, 230, 255, 0.856);
             border: 1px solid rgba(224, 232, 255, 0.8);
             position: relative;
             z-index: 1;
@@ -1027,7 +1061,7 @@
             font-size: 1.5rem;
             transition: var(--transition);
         }
-
+       
         .fListItem:hover {
             color: var(--light-blue);
             padding-left: 8px;
@@ -1327,7 +1361,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav id="nav">
         <div class="navTop">
             <div class="navItem">
@@ -1347,15 +1380,14 @@
             </div>
         </div>
         <div class="navBottom">
-            <h3 class="menuItem">BOBA ICE CREAM</h3>
-            <h3 class="menuItem">BOBA PASSION FRUIT JUICE</h3>
-            <h3 class="menuItem">BOBA + CHOCOLATE ICE CREAM</h3>
-            <h3 class="menuItem">LEMONADE JUICE</h3>
-            <h3 class="menuItem">MANGO + KIWI ICE CREAM</h3>
+            <h3 class="menuItem" data-target="product-boba-ice-cream">BOBA ICE CREAM</h3>
+            <h3 class="menuItem" data-target="product-boba-passion-fruit-juice">BOBA PASSION FRUIT JUICE</h3>
+            <h3 class="menuItem" data-target="product-boba-chocolate-ice-cream">BOBA + CHOCOLATE ICE CREAM</h3>
+            <h3 class="menuItem" data-target="product-lemonade-juice">LEMONADE JUICE</h3>
+            <h3 class="menuItem" data-target="product-mango-kiwi-ice-cream">MANGO + KIWI ICE CREAM</h3>
         </div>
     </nav>
 
-    <!-- Slider -->
     <div class="slider">
         <div class="sliderWrapper">
             <div class="sliderItem active">
@@ -1423,34 +1455,28 @@
         </div>
     </div>
    
-    <!-- Features -->
     <div class="features">
         <div class="feature">
-            <img src="./img/Icon/shipping.png" alt="Free shipping" class="featureIcon">
+            <img src="https://th.bing.com/th/id/R.93f31d069567d92287a217aa607d39a2?rik=F%2ftEE4eBrxOoag&riu=http%3a%2f%2fpluspng.com%2fimg-png%2ffree-shipping-png-free-shipping-icon-1600.png&ehk=kPdnOmIwc3o91rZ6p8fnz%2frQGzTAGS7xjUBk0MGZa5M%3d&risl=&pid=ImgRaw&r=0" alt="Free shipping" class="featureIcon">
             <span class="featureTitle">FREE SHIPPING</span>
-            <span class="featureDesc">Free worldwide shipping on all orders with no minimum purchase required.</span>
+            <span class="featureDesc">Enjoy free standard shipping on every order—no minimum purchase required!</span>✔ No hidden fees✔ Fast, reliable delivery✔ Track your package every step of the way
+</span>
         </div>
         <div class="feature">
-            <img class="featureIcon" src="./img/Icon/return.png" alt="24 hrs return">
-            <span class="featureTitle">24 HOUR RETURN</span>
-            <span class="featureDesc">No question return and easy refund process within 24 hours.</span>
+            <img class="featureIcon" src="https://cdn-icons-png.flaticon.com/512/1405/1405276.png" alt="Voucher">
+            <span class="featureTitle">FREE ONE VANILLA ICE CREAM CONE VOUCHER</span>
+            <span class="featureDesc">On Your Next Purchase on any purchase amount above RM 5.</span>
         </div>
         <div class="feature">
-            <img class="featureIcon" src="./img/Icon/gift.png" alt="Coupons">
-            <span class="featureTitle">COUPONS</span>
-            <span class="featureDesc">Use coupon codes easily for discount.</span>
-        </div>
-        <div class="feature">
-            <img class="featureIcon" src="./img/Icon/contact.png" alt="Contact us">
+            <img class="featureIcon" src="https://static.vecteezy.com/system/resources/previews/021/048/581/original/contact-message-gradient-icon-free-png.png" alt="Contact us">
             <span class="featureTitle">CONTACT US!</span>
-            <span class="featureDesc">24/7 support via chat, email, and phone. We're here to help!</span>
+            <span class="featureDesc">Need quick help? You can reach us through email or phone. We aim to respond to all inquiries within 24 hours.</span>
         </div> 
     </div>
     
-    <!-- Products -->
-    <h2 class="section-title">Our Signature Products</h2>
+    <h2 class="section-title">Our Signature Products\(￣▽￣)/ </h2>
     <div class="product" id="product">
-        <div class="productDetails animate active" id="product-boba-ice-cream">
+        <div class="productDetails active" id="product-boba-ice-cream">
             <img src="./img/Product/Boba ice cream.png" alt="Boba ice cream" class="productDetailImg">
             <div class="productDetailInfo">
                 <h2 class="productDetailTitle">BOBA <span>ICE CREAM</span></h2>
@@ -1459,7 +1485,7 @@
                 <button class="productDetailButton">BUY NOW!</button>
             </div>
         </div>
-        <div class="productDetails animate" id="product-boba-passion-fruit-juice">
+        <div class="productDetails" id="product-boba-passion-fruit-juice">
             <img src="./img/Product/Boba Passion Fruit Juice.png" alt="Boba passion fruit juice" class="productDetailImg">
             <div class="productDetailInfo">
                 <h2 class="productDetailTitle">BOBA <span>PASSION FRUIT JUICE</span></h2>
@@ -1468,7 +1494,7 @@
                 <button class="productDetailButton">BUY NOW!</button>
             </div>
         </div>
-        <div class="productDetails animate" id="product-boba-chocolate-ice-cream">
+        <div class="productDetails" id="product-boba-chocolate-ice-cream">
             <img src="./img/Product/Boba + Chocolate Ice Cream.png" alt="Boba + chocolate ice cream" class="productDetailImg">
             <div class="productDetailInfo">
             <h2 class="productDetailTitle">BOBA + <span>CHOCOLATE ICE CREAM</span></h2>
@@ -1477,7 +1503,7 @@
             <button class="productDetailButton">BUY NOW!</button>
             </div>
         </div>
-        <div class="productDetails animate" id="product-lemonade-juice">
+        <div class="productDetails" id="product-lemonade-juice">
             <img src="./img/Product/Lemonade Juice.png" alt="Lemonade juice" class="productDetailImg">
             <div class="productDetailInfo">
             <h2 class="productDetailTitle"><span>LEMONADE</span> JUICE</h2>
@@ -1486,7 +1512,7 @@
             <button class="productDetailButton">BUY NOW!</button>
             </div>
         </div>
-        <div class="productDetails animate" id="product-mango-kiwi-ice-cream">
+        <div class="productDetails" id="product-mango-kiwi-ice-cream">
             <img src="./img/Product/Mango + Kiwi Ice Cream.png" alt="Mango + kiwi ice cream" class="productDetailImg">
             <div class="productDetailInfo">
             <h2 class="productDetailTitle">MANGO + <span>KIWI ICE CREAM</span></h2>
@@ -1495,60 +1521,68 @@
             <button class="productDetailButton">BUY NOW!</button>
             </div>
         </div>
-        </div>
-        
-        <!-- Payment Form -->
-        <div class="payment animate">
-            <h1 class="payTitle">Personal Information</h1>
-            <form action="data.php" method="POST">
-                <label>Name and Surname</label>
-                <input type="text" name="name" placeholder="Vincent" class="payInput" required>
-                <br>
-                <label>Phone Number</label>
-                <input type="text" name="phone" placeholder="+6012 345 9876" class="payInput" maxlength="13" required>
-                <br>
-                <label>Address</label>
-                <input type="text" name="address" placeholder="123 Main Street, Kuala Lumpur" class="payInput" required>
-                <br>
-                <h1 class="payTitle">Card Information</h1>
-                <div class="cardIcons">
-                    <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" width="50" alt="Visa" class="cardIcon">
-                    <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Mastercard" width="50" class="cardIcon">
-                    <img src="https://cdn-icons-png.flaticon.com/512/196/196566.png" alt="American Express" width="50" class="cardIcon">
-                </div>
-                <input type="text" name="card_number" class="payInput" placeholder="Card Number" maxlength="16" required>
-                <div class="cardInfo">
-                    <input type="text" name="expiry_month" placeholder="MM" class="payInput sm" maxlength="2" required>
-                    <input type="text" name="expiry_year" placeholder="YYYY" class="payInput sm" maxlength="4" required>
-                    <input type="text" name="cvv" placeholder="CVV" class="payInput sm" maxlength="3" required>
-                </div>
-                <button type="submit" class="payButton">Checkout Now</button>
-                <span class="close">X</span>
-            </form>
-        </div>
     </div>
+        
+    <div class="payment">
+        <h1 class="payTitle">Personal Information</h1>
+        <form action="data.php" method="POST">
+            <label for="name">Name and Surname</label>
+            <input type="text" id="name" name="name" placeholder="Vincent" class="payInput" required>
+            <br>
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="+6012 345 9876" class="payInput" maxlength="13" required>
+            <br>
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" placeholder="321 Main Street, Kuala Lumpur" class="payInput" required>
+            <br>
+            <h1 class="payTitle">Card Information</h1>
+            <div class="cardIcons">
+                <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" width="50" alt="Visa" class="cardIcon">
+                <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Mastercard" width="50" class="cardIcon">
+                <img src="https://cdn-icons-png.flaticon.com/512/196/196566.png" alt="American Express" width="50" class="cardIcon">
+            </div>
+            <label for="card_number">Card Number</label>
+            <input type="text" id="card_number" name="card_number" class="payInput" placeholder="Card Number" maxlength="16" required>
+            <div class="cardInfo">
+                <div>
+                    <label for="expiry_month">Expiry Month</label>
+                    <input type="text" id="expiry_month" name="expiry_month" placeholder="MM" class="payInput sm" maxlength="2" required>
+                </div>
+                <div>
+                    <label for="expiry_year">Expiry Year</label>
+                    <input type="text" id="expiry_year" name="expiry_year" placeholder="YYYY" class="payInput sm" maxlength="4" required>
+                </div>
+                <div>
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="CVV" class="payInput sm" maxlength="3" required>
+                </div>
+            </div>
+            <button type="submit" class="payButton">Checkout Now</button>
+            <span class="close">X</span>
+        </form>
+    </div>
+
     
-    <!-- Gallery -->
     <div class="gallery">
-        <div class="galleryItem animate">
+        <div class="galleryItem">
             <h1 class="galleryTitle">Enjoy Our Signature Boba!</h1>
-            <img src="./img/Product/Boba ice cream.png" alt="Boba ice cream" class="galleryImg">
+            <img src="https://static.vecteezy.com/system/resources/previews/030/739/955/original/iced-boba-drink-isolated-on-transparent-background-fresh-drink-in-a-plastic-cup-generative-ai-png.png" alt="Boba ice cream" class="galleryImg">
         </div>
-        <div class="galleryItem animate">
-            <img src="./img/Product/Lemonade Juice.png" alt="Lemonade juice" class="galleryImg">
+        <div class="galleryItem">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/050/480/255/small_2x/refreshing-lemonade-served-with-fresh-lemon-slices-cut-out-stock-png.png" alt="Lemonade juice" class="galleryImg">
             <h1 class="galleryTitle">Cool Down with Lemonade Juice</h1>
         </div>
-        <div class="galleryItem animate">
+        <div class="galleryItem">
             <h1 class="galleryTitle">Try Our New Flavours!</h1>
-            <img src="./img/Product/Boba + Chocolate Ice Cream.png" alt="Boba + chocolate ice cream" class="galleryImg">
+            <img src="https://png.pngtree.com/png-vector/20240327/ourmid/pngtree-a-collection-ofs-of-boba-drinks-with-boba-balls-png-image_12220550.png" alt="Boba + chocolate ice cream" class="galleryImg">
         </div>
-        <div class="galleryItem animate">
-            <img src="./img/Product/Boba Passion Fruit Juice.png" alt="Boba passion fruit juice" class="galleryImg">
+        <div class="galleryItem">
+            <img src="https://static.vecteezy.com/system/resources/previews/027/145/854/original/closeup-glass-of-passionfruit-drink-perfect-for-drink-catalog-ai-generated-png.png" alt="Passion fruit juice" class="galleryImg">
             <h1 class="galleryTitle">Refreshing Boba Passion Fruit Juice</h1>
         </div>
-        <div class="galleryItem animate">
-            <img src="./img/Product/Mango + Kiwi Ice Cream.png" alt="Mango + kiwi ice cream" class="galleryImg">
-            <h1 class="galleryTitle">Tropical Mango & Kiwi Delight</h1>
+        <div class="galleryItem">
+            <img src="https://static.vecteezy.com/system/resources/previews/047/490/976/original/blue-cocktail-with-mint-png.png" alt="cocktail" class="galleryImg">
+            <h1 class="galleryTitle">Blue cocktail with mint</h1>
         </div>
         <div class="nsItem">
             <h3 class="nsTitleSm">SIGNATURE BERRY BLAST & BLITZ SPECIALS</h3>
@@ -1560,17 +1594,20 @@
         </div>
     </div>
     
-    <!-- Footer -->
     <footer>
-        <div class="footerLeft">
             <div class="footerMenu">
-                <h1 class="fMenuTitle">About Us</h1>
+                <h1 class="fMenuTitle">About Us( =•ω•= )</h1>
                 <ul class="fList">
                     <li class="fListItem">Company</li>
+                    <li class="footerLinkItem"><a href="webto:info@berryblast&blitz.com" class="footerLink"><i class="fas fa-envelope"></i> @berryblast&blitz_company.com</a></li>
                     <li class="fListItem">Contact</li>
-                    <li class="fListItem">Careers</li>
-                    <li class="fListItem">Affiliates</li>
-                    <li class="fListItem">Stores</li>
+                     <ul class="footerLinks">
+                    <li class="footerLinkItem"><a href="#" class="footerLink"><i class="fas fa-map-marker-alt"></i> 11000 Jalan Kuala Lumpur</a></li>
+                    <li class="footerLinkItem"><a href="tel:+11234567890" class="footerLink"><i class="fas fa-phone"></i> +60 12 345 9876</a></li>
+                    <li class="footerLinkItem"><a href="mailto:info@berryblast&blitz.com" class="footerLink"><i class="fas fa-envelope"></i> info@berryblast&blitz.com</a></li>
+                    <li class="footerLinkItem"><a href="#" class="footerLink"><i class="fas fa-clock"></i> Mon-Sat: 5.20AM - 5.20PM</a></li>
+                </ul>
+            </div>
                 </ul>
             </div>
             <div class="footerMenu">
@@ -1584,7 +1621,7 @@
                 </ul>
             </div>
             <div class="footerMenu">
-                <h1 class="fMenuTitle">Products</h1>
+                <h1 class="fMenuTitle">Our Products</h1>
                 <ul class="fList">
                     <li class="fListItem">Boba Ice Cream</li>
                     <li class="fListItem">Boba Passion Fruit Juice</li>
@@ -1596,9 +1633,9 @@
         </div>
         <div class="footerRight">
             <div class="footerRightMenu">
-                <h1 class="fMenuTitle">Yo! Subscribe to Berry Blast & Blitz Updates</h1>
+                <h1 class="fMenuTitle">Go go go! Subscribe to our Berry Blast & Blitz updates!</h1>
                 <input type="email" placeholder="your@email.com" class="fInput">
-                <button class="fButton">Subscribe Now</button>
+                <button class="fButton">Subscribe Now!!</button>
             </div>
             <div class="footerRightMenu">
                 <div class="fIcons">
@@ -1609,97 +1646,157 @@
                 </div>
             </div>
             <div class="footerRightMenu">
-                <span class="copyright">@Zying/Helen/Celina. All rights reserved. 2025. | Berry Blast & Blitz</span>
+                <span class="copyright">  @Tralaleloヾ(≧▽≦*) .2025. All rights reserved.| Berry Blast & Blitz</span>
             </div>
         </div>
     </footer>
 
     <button id="scrollToTopBtn"><i class="fas fa-arrow-up"></i></button>
     
+    <!-- Particles background container -->
+    <div id="particles-js" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Enhanced slider functionality
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#5d5fef" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#9370db",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.5,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sliderWrapper = document.querySelector('.sliderWrapper');
             const sliderItems = document.querySelectorAll('.sliderItem');
             const dots = document.querySelectorAll('.sliderDot');
+            const productItems = document.querySelectorAll('.productDetails');
+            const menuItems = document.querySelectorAll('.menuItem');
+            const paymentForm = document.querySelector('.payment');
+            const closePaymentButton = document.querySelector('.close');
+            const form = document.querySelector('form');
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
             let currentIndex = 0;
-            
-            // Initialize first slide
-            sliderItems[0].classList.add('active');
-            dots[0].classList.add('active');
-            
+            const numSlides = sliderItems.length;
+
+            // --- Slider Functionality ---
             function showSlide(index) {
-                // Reset all slides
+                // Ensure index is within bounds
+                const newIndex = (index + numSlides) % numSlides;
+                
                 sliderItems.forEach(item => item.classList.remove('active'));
                 dots.forEach(dot => dot.classList.remove('active'));
                 
-                // Show current slide
-                sliderItems[index].classList.add('active');
-                dots[index].classList.add('active');
+                sliderItems[newIndex].classList.add('active');
+                dots[newIndex].classList.add('active');
                 
-                // Update slider position
-                sliderWrapper.style.transform = `translateX(${-index * 100}%)`;
-                currentIndex = index;
+                // FIXED: Correctly calculate the transform percentage
+                sliderWrapper.style.transform = `translateX(-${newIndex * (100 / numSlides)}%)`;
+                currentIndex = newIndex;
             }
-            
-            // Add click event to dots
+
             dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index);
+                dot.addEventListener('click', () => showSlide(index));
+            });
+
+            setInterval(() => {
+                showSlide(currentIndex + 1);
+            }, 5000);
+
+            // Initialize first slide
+            showSlide(0);
+
+            // --- Product Navigation ---
+            // FIXED: Use data-target for robust navigation
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetId = this.dataset.target;
+                    const targetProduct = document.getElementById(targetId);
+
+                    productItems.forEach(p => p.classList.remove('active'));
+                    
+                    if (targetProduct) {
+                        targetProduct.classList.add('active');
+                        // Scroll to the product section for visibility
+                        document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+                    }
                 });
             });
-            
-            // Auto slide every 5 seconds
-            setInterval(() => {
-                let nextIndex = (currentIndex + 1) % sliderItems.length;
-                showSlide(nextIndex);
-            }, 5000);
-            
-            // Add click event to buy buttons
+
+            // --- Payment Form Handling ---
             document.querySelectorAll('.buyButton, .productDetailButton, .nsButton').forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const payment = document.querySelector('.payment');
-                    payment.classList.add('animate');
-                    payment.scrollIntoView({ behavior: 'smooth' });
+                    paymentForm.classList.add('animate');
+                    paymentForm.scrollIntoView({ behavior: 'smooth' });
                 });
             });
-            
-            // Close payment form
-            document.querySelector('.close').addEventListener('click', function() {
+
+            closePaymentButton.addEventListener('click', function() {
                 this.closest('.payment').classList.remove('animate');
                 setTimeout(() => {
                     alert('Order canceled. You can continue shopping!');
                 }, 300);
             });
-            
-            // Form submission
-            document.querySelector('form').addEventListener('submit', function(e) {
+
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Order placed successfully! Thank you for your purchase.');
                 this.reset();
+                paymentForm.classList.remove('animate');
             });
-            
-            // Scroll animations
+
+            // --- Scroll Animations ---
+            // FIXED: The 'animate' class is now added by JS, not hardcoded in HTML
             function animateOnScroll() {
-                const elements = document.querySelectorAll('.productDetails, .galleryItem, .payment');
-                elements.forEach(el => {
+                const elementsToAnimate = document.querySelectorAll('.productDetails, .galleryItem, .payment');
+                elementsToAnimate.forEach(el => {
                     const position = el.getBoundingClientRect();
+                    // Animate when the top of the element is within 90% of the viewport height
                     if (position.top < window.innerHeight * 0.9) {
                         el.classList.add('animate');
                     }
                 });
             }
             
-            // Initial check
-            animateOnScroll();
-            
-            // Listen for scroll
             window.addEventListener('scroll', animateOnScroll);
-            
-            // Scroll to top button
-            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-            
+            // Initial check on load
+            animateOnScroll();
+
+            // --- Scroll to Top Button ---
             window.addEventListener('scroll', () => {
                 if (window.pageYOffset > 300) {
                     scrollToTopBtn.classList.add('show');
@@ -1707,23 +1804,12 @@
                     scrollToTopBtn.classList.remove('show');
                 }
             });
-            
+
             scrollToTopBtn.addEventListener('click', () => {
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
-            });
-        });
-
-        document.querySelectorAll('.menuItem').forEach((item, idx) => {
-            item.addEventListener('click', function() {
-                // Hide all products
-                document.querySelectorAll('.productDetails').forEach(p => p.classList.remove('active'));
-                // Show the selected product (order must match .menuItem order)
-                document.querySelectorAll('.productDetails')[idx].classList.add('active');
-                // Scroll to product section
-                document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
