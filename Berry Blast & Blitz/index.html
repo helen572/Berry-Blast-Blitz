@@ -813,6 +813,21 @@
             left: 0;
         }
 
+        .payButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .payButton:disabled:hover {
+            transform: none;
+            box-shadow: 0 8px 25px rgba(26, 58, 143, 0.4);
+        }
+
+        .payButton:disabled:hover::before {
+            left: -100%;
+        }
+
         .close {
             position: absolute;
             top: 25px;
@@ -908,7 +923,7 @@
             text-align: center;
             border-radius:90px;
             color: var(--white);
-            grid-column: span 2;
+            grid-column: span 3;
             position: relative;
             overflow: hidden;
         }
@@ -1755,7 +1770,8 @@
                     if (targetProduct) {
                         targetProduct.classList.add('active');
                         // Scroll to the product section for visibility
-                        document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+                        // document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+                        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
                     }
                 });
             });
@@ -1776,11 +1792,46 @@
                 }, 300);
             });
 
+            // AJAX Form Submission
             form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Order placed successfully! Thank you for your purchase.');
-                this.reset();
-                paymentForm.classList.remove('animate');
+                e.preventDefault(); // Prevent default form submission
+                
+                // Show loading message
+                const submitButton = this.querySelector('.payButton');
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Processing...';
+                submitButton.disabled = true;
+                
+                // Create FormData object
+                const formData = new FormData(this);
+                
+                // Submit form via AJAX
+                fetch('data.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Reset button
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    
+                    if (data.success) {
+                        alert(data.message);
+                        this.reset(); // Clear form
+                        paymentForm.classList.remove('animate'); // Close payment form
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    // Reset button
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    
+                    console.error('Error:', error);
+                    alert('Sorry, there was an error processing your order. Please try again.');
+                });
             });
 
             // --- Scroll Animations ---
