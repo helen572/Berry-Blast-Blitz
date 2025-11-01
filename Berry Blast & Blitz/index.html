@@ -119,6 +119,46 @@
             animation: spin 20s linear infinite;
             transform: scale(1.1) rotate(15deg);
         }
+
+        /* Banner cart button in the top nav */
+        .bannerCartBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .bannerCartBtn:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.10);
+        }
+
+        .bannerCartBtn i { /* cart icon */
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .cartBadge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            background: #ff5d5d;
+            color: #fff;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            line-height: 1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
     
 
         @keyframes spin {
@@ -813,24 +853,53 @@
             left: 0;
         }
 
-        .close {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--dark-gray);
-            transition: var(--transition);
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(224, 232, 255, 0.5);
+        .payButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .close:hover {
+        .payButton:disabled:hover {
+            transform: none;
+            box-shadow: 0 8px 25px rgba(26, 58, 143, 0.4);
+        }
+
+        .payButton:disabled:hover::before {
+            left: -100%;
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20000;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            padding: 32px 24px;
+            max-width: 730px;
+            width: 95vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            font-family: inherit;
+        }
+        .payment-modal.show {
+            display: block;
+        }
+        .payment-modal .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+            background: none;
+            border: none;
+        }
+        .payment-modal .close:hover {
             color: var(--primary-blue);
             background: var(--light-gray);
             transform: rotate(90deg) scale(1.1);
@@ -908,7 +977,7 @@
             text-align: center;
             border-radius:90px;
             color: var(--white);
-            grid-column: span 2;
+            grid-column: span 3;
             position: relative;
             overflow: hidden;
         }
@@ -1379,6 +1448,11 @@
             </div>
             <div class="navItem">
                 <span class="limitedOffer" onclick="location.href='admin.php';"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</span>
+                <!-- Banner cart button (header) -->
+                <button id="bannerCartBtn" class="bannerCartBtn" type="button" aria-label="View cart" style="margin-left:12px;">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    <span id="bannerCartCount" class="cartBadge">0</span>
+                </button>
             </div>
         </div>
         <div class="navBottom">
@@ -1484,7 +1558,9 @@
                 <h2 class="productDetailTitle">BOBA <span>ICE CREAM</span></h2>
                 <p class="productDetailDesc">A creamy ice cream bar featuring chewy brown sugar boba pearls, served on a white plate for a fresh and inviting treat. Perfect for boba lovers seeking a cool dessert experience that combines traditional flavors with modern presentation.</p>
                 <span class="productDetailPrice">RM6</span>
-                <button class="productDetailButton">BUY NOW!</button>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <button class="productDetailButton add-to-cart" data-product-id="1" data-product-name="BOBA ICE CREAM" data-price="6.00" data-quantity="1">Add to Cart</button>
+                </div>
             </div>
         </div>
         <div class="productDetails" id="product-boba-passion-fruit-juice">
@@ -1493,7 +1569,9 @@
                 <h2 class="productDetailTitle">BOBA <span>PASSION FRUIT JUICE</span></h2>
                 <p class="productDetailDesc">A refreshing passion fruit juice with chewy boba pearls and white jelly cubes, served in a large cup. This tropical delight is perfect for a cool, fruity treat on a hot day, offering a perfect balance of sweetness and tartness.</p>
                 <span class="productDetailPrice">RM5</span>
-                <button class="productDetailButton">BUY NOW!</button>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <button class="productDetailButton add-to-cart" data-product-id="2" data-product-name="BOBA PASSION FRUIT JUICE" data-price="5.00" data-quantity="1">Add to Cart</button>
+                </div>
             </div>
         </div>
         <div class="productDetails" id="product-boba-chocolate-ice-cream">
@@ -1502,7 +1580,9 @@
             <h2 class="productDetailTitle">BOBA + <span>CHOCOLATE ICE CREAM</span></h2>
             <p class="productDetailDesc">Indulge in our premium chocolate ice cream bar generously studded with boba pearls. Partially unwrapped to reveal its delicious contents, this treat rests on a pristine white plate, creating an appetizing and cheerful mood for chocolate lovers.</p>
             <span class="productDetailPrice">RM9.99</span>
-            <button class="productDetailButton">BUY NOW!</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="productDetailButton add-to-cart" data-product-id="3" data-product-name="BOBA + CHOCOLATE ICE CREAM" data-price="9.99" data-quantity="1">Add to Cart</button>
+            </div>
             </div>
         </div>
         <div class="productDetails" id="product-lemonade-juice">
@@ -1511,7 +1591,9 @@
             <h2 class="productDetailTitle"><span>LEMONADE</span> JUICE</h2>
             <p class="productDetailDesc">A zesty and refreshing lemonade juice, served chilled with slices of fresh lemon and ice cubes. Perfect for a hot day, this beverage delivers a burst of citrus flavor that revitalizes your senses and quenches your thirst like nothing else.</p>
             <span class="productDetailPrice">RM4.50</span>
-            <button class="productDetailButton">BUY NOW!</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="productDetailButton add-to-cart" data-product-id="4" data-product-name="LEMONADE JUICE" data-price="4.50" data-quantity="1">Add to Cart</button>
+            </div>
             </div>
         </div>
         <div class="productDetails" id="product-mango-kiwi-ice-cream">
@@ -1520,12 +1602,14 @@
             <h2 class="productDetailTitle">MANGO + <span>KIWI ICE CREAM</span></h2>
             <p class="productDetailDesc">A tropical delight combining creamy mango and tangy kiwi ice cream, topped with fresh fruit pieces. This colorful and exotic treat is specially crafted for fruit lovers seeking a refreshing escape to paradise with every spoonful.</p>
             <span class="productDetailPrice">RM6.66</span>
-            <button class="productDetailButton">BUY NOW!</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="productDetailButton add-to-cart" data-product-id="5" data-product-name="MANGO + KIWI ICE CREAM" data-price="6.66" data-quantity="1">Add to Cart</button>
+            </div>
             </div>
         </div>
     </div>
         
-    <div class="payment">
+    <div class="payment-modal" id="paymentModal">
         <h1 class="payTitle">Personal Information</h1>
         <form action="data.php" method="POST">
             <label for="name">Name and Surname</label>
@@ -1559,8 +1643,8 @@
                     <input type="text" id="cvv" name="cvv" placeholder="CVV" class="payInput sm" maxlength="3" required>
                 </div>
             </div>
-            <button type="submit" class="payButton">Checkout Now</button>
-            <span class="close">X</span>
+            <button type="submit" class="payButton">Buy Now</button>
+            <button type="button" class="close" id="closePaymentModal">X</button>
         </form>
     </div>
 
@@ -1660,7 +1744,21 @@
     <!-- Particles background container -->
     <div id="particles-js" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></div>
 
+    <!-- Cart UI -->
+    <div id="cartModal" style="display:none;position:fixed;right:20px;bottom:70px;z-index:10000;width:320px;max-height:60vh;overflow:auto;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.2);padding:16px;font-family:inherit;">
+        <h3 style="margin-top:0;">Your Cart</h3>
+        <div id="cartItems">Loading...</div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center;">
+            <strong id="cartTotal">Total: RM0.00</strong>
+            <div>
+                <button id="checkoutFromCart" class="payButton" style="margin-right:8px;">BUY NOW!</button>
+                <button id="closeCart" style="background:#eee;border:none;padding:6px 10px;border-radius:6px;">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="search.js"></script>
     <script>
         particlesJS("particles-js", {
             particles: {
@@ -1755,32 +1853,83 @@
                     if (targetProduct) {
                         targetProduct.classList.add('active');
                         // Scroll to the product section for visibility
-                        document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+                        // document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
+                        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
                     }
                 });
             });
 
-            // --- Payment Form Handling ---
-            document.querySelectorAll('.buyButton, .productDetailButton, .nsButton').forEach(button => {
-                button.addEventListener('click', function(e) {
+            // --- Payment Modal Handling ---
+            const paymentModal = document.getElementById('paymentModal');
+            const closePaymentModal = document.getElementById('closePaymentModal');
+            const checkoutFromCartBtn = document.getElementById('checkoutFromCart');
+            // Show modal when cart Buy Now is clicked
+            if (checkoutFromCartBtn) {
+                checkoutFromCartBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    paymentForm.classList.add('animate');
-                    paymentForm.scrollIntoView({ behavior: 'smooth' });
+                    paymentModal.classList.add('show');
                 });
+            }
+             // Show modal when any product 'Buy Now' button is clicked
+             document.querySelectorAll('.productDetailButton').forEach(btn => {
+                 if (btn.textContent.trim().toUpperCase() === 'BUY NOW!') {
+                     btn.addEventListener('click', function(e) {
+                         e.preventDefault();
+                         paymentModal.classList.add('show');
+                     });
+                 }
+             });
+            // Close modal
+            closePaymentModal.addEventListener('click', function() {
+                paymentModal.classList.remove('show');
+            });
+            // Optionally, close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (paymentModal.classList.contains('show') && !paymentModal.contains(e.target) && e.target !== checkoutFromCartBtn) {
+                    paymentModal.classList.remove('show');
+                }
             });
 
-            closePaymentButton.addEventListener('click', function() {
-                this.closest('.payment').classList.remove('animate');
-                setTimeout(() => {
-                    alert('Order canceled. You can continue shopping!');
-                }, 300);
-            });
-
+            // AJAX Form Submission
             form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Order placed successfully! Thank you for your purchase.');
-                this.reset();
-                paymentForm.classList.remove('animate');
+                e.preventDefault(); // Prevent default form submission
+                
+                // Show loading message
+                const submitButton = this.querySelector('.payButton');
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Processing...';
+                submitButton.disabled = true;
+                
+                // Create FormData object
+                const formData = new FormData(this);
+                
+                // Submit form via AJAX
+                fetch('data.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Reset button
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    
+                    if (data.success) {
+                        alert(data.message);
+                        this.reset(); // Clear form
+                        paymentModal.classList.remove('show'); // Close payment modal
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    // Reset button
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    
+                    console.error('Error:', error);
+                    alert('Sorry, there was an error processing your order. Please try again.');
+                });
             });
 
             // --- Scroll Animations ---
@@ -1815,6 +1964,189 @@
                     behavior: 'smooth'
                 });
             });
+
+            // --- Add to Cart & Cart UI Functionality ---
+            const cartModal = document.getElementById('cartModal');
+            const bannerCartBtn = document.getElementById('bannerCartBtn');
+            const bannerCartCount = document.getElementById('bannerCartCount');
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalEl = document.getElementById('cartTotal');
+
+            function refreshCartCount() {
+                fetch('data.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ action: 'view_cart' })
+                })
+                .then(r => r.json())
+                .then(json => {
+                    if (json.success) {
+                        let count = 0;
+                        json.items.forEach(i => count += parseInt(i.quantity));
+                        if (bannerCartCount) bannerCartCount.textContent = count;
+                        if (bannerCartBtn) bannerCartBtn.setAttribute('aria-label', `View Cart (${count})`);
+                    }
+                });
+            }
+
+            function fetchCart() {
+                cartItemsContainer.innerHTML = 'Loading...';
+                fetch('data.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ action: 'view_cart' })
+                })
+                .then(r => r.json())
+                .then(json => {
+                    if (!json.success) {
+                        cartItemsContainer.innerHTML = '<div>Error loading cart</div>';
+                        return;
+                    }
+                    const items = json.items;
+                    if (!items.length) {
+                        cartItemsContainer.innerHTML = '<div>Your cart is empty.</div>';
+                        cartTotalEl.textContent = 'Total: RM0.00';
+                        if (bannerCartCount) bannerCartCount.textContent = '0';
+                        return;
+                    }
+
+                    let html = '<ul style="list-style:none;padding:0;margin:0;">';
+                    let total = 0;
+                    items.forEach(it => {
+                        const lineTotal = parseFloat(it.price) * parseInt(it.quantity);
+                        total += lineTotal;
+                        html += `<li style="margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:8px;">` +
+                                `<div style="font-weight:600;">${it.product_name}</div>` +
+                                `<div>RM${parseFloat(it.price).toFixed(2)} x ${it.quantity} = RM${lineTotal.toFixed(2)}</div>` +
+                                `<div style="margin-top:6px;display:flex;gap:8px;align-items:center;">` +
+                                    `<button class="qty-decrease" data-cart-id="${it.id}" style="background:#f0f0f0;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">-</button>` +
+                                    `<span class="cart-qty" data-cart-id="${it.id}" style="min-width:28px;text-align:center;">${it.quantity}</span>` +
+                                    `<button class="qty-increase" data-cart-id="${it.id}" style="background:#f0f0f0;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">+</button>` +
+                                    `<button class="remove-cart-item" data-cart-id="${it.id}" style="background:#ff6b6b;border:none;padding:6px 8px;color:#fff;border-radius:6px;cursor:pointer;margin-left:8px;">Remove</button>` +
+                                `</div>` +
+                                `</li>`;
+                    });
+                    html += '</ul>';
+                    cartItemsContainer.innerHTML = html;
+                    cartTotalEl.textContent = `Total: RM${total.toFixed(2)}`;
+
+                    // attach remove handlers
+                    document.querySelectorAll('.remove-cart-item').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const cartId = this.getAttribute('data-cart-id');
+                            fetch('data.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({ action: 'remove_from_cart', cart_id: cartId })
+                            })
+                            .then(r => r.json())
+                            .then(res => {
+                                alert(res.message);
+                                fetchCart();
+                                refreshCartCount();
+                            });
+                        });
+                    });
+
+                    // attach quantity increase handlers
+                    document.querySelectorAll('.qty-increase').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const cartId = this.getAttribute('data-cart-id');
+                            fetch('data.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({ action: 'increment_qty', cart_id: cartId })
+                            })
+                            .then(r => r.json())
+                            .then(res => {
+                                // update UI
+                                fetchCart();
+                                refreshCartCount();
+                            });
+                        });
+                    });
+
+                    // attach quantity decrease handlers
+                    document.querySelectorAll('.qty-decrease').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const cartId = this.getAttribute('data-cart-id');
+                            fetch('data.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({ action: 'decrement_qty', cart_id: cartId })
+                            })
+                            .then(r => r.json())
+                            .then(res => {
+                                // update UI
+                                fetchCart();
+                                refreshCartCount();
+                            });
+                        });
+                    });
+                });
+            }
+
+            // Add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const productName = this.getAttribute('data-product-name') || this.dataset.productName || '';
+                    const price = this.getAttribute('data-price') || this.dataset.price || 0;
+                    const quantity = this.getAttribute('data-quantity') || 1;
+
+                    fetch('data.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            action: 'add_to_cart',
+                            product_id: productId,
+                            product_name: productName,
+                            price: price,
+                            quantity: quantity
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        alert(data.message);
+                        refreshCartCount();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Failed to add to cart');
+                    });
+                });
+            });
+
+            // Header cart button (replaces bottom view button)
+            if (bannerCartBtn) {
+                bannerCartBtn.addEventListener('click', function() {
+                    if (cartModal.style.display === 'none' || !cartModal.style.display) {
+                        cartModal.style.display = 'block';
+                        fetchCart();
+                    } else {
+                        cartModal.style.display = 'none';
+                    }
+                });
+            }
+
+            document.getElementById('closeCart').addEventListener('click', function() {
+                cartModal.style.display = 'none';
+            });
+
+            document.getElementById('checkoutFromCart').addEventListener('click', function() {
+                // Open payment form and close cart modal
+                cartModal.style.display = 'none';
+                const paymentFormEl = document.querySelector('.payment');
+                if (paymentFormEl) {
+                    paymentFormEl.classList.add('animate');
+                    paymentFormEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Initial cart count and periodic refresh
+            refreshCartCount();
+            // Keep header badge up-to-date every 5s
+            setInterval(refreshCartCount, 5000);
         });
     </script>
 </body>
