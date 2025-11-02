@@ -4,8 +4,14 @@ const menuItems = document.querySelectorAll(".menuItem");
 const products = [
   {
     id: 1,
-    title: "BOBA ICE CREAM"
+    title: "BOBA ICE CREAM",
     price: 6,
+    get price() {
+      return this._price;
+    },
+    set price(value) {
+      this._price = value;
+    },
     colors: [
       {
         code: "black",
@@ -15,8 +21,14 @@ const products = [
   },
   {
     id: 2,
-    title: "BOBA PASSION FRUIT JUICE"
+    title: "BOBA PASSION FRUIT JUICE",
     price: 5,
+    get price() {
+      return this._price;
+    },
+    set price(value) {
+      this._price = value;
+    },
     colors: [
       {
         code: "lightgray",
@@ -26,8 +38,14 @@ const products = [
   },
   {
     id: 3,
-    title: "BOBA + CHOCOLATE ICE CREAM"
+    title: "BOBA + CHOCOLATE ICE CREAM",
     price: 9.99,
+    get price() {
+      return this._price;
+    },
+    set price(value) {
+      this._price = value;
+    },
     colors: [
       {
         code: "lightgray",
@@ -37,8 +55,14 @@ const products = [
   },
   {
     id: 4,
-    title: "LEMONADE JUICE"
+    title: "LEMONADE JUICE",
     price: 4.50,
+    get price() {
+      return this._price;
+    },
+    set price(value) {
+      this._price = value;
+    },
     colors: [
       {
         code: "black",
@@ -48,8 +72,14 @@ const products = [
   },
   {
     id: 5,
-    title: "MANGO + KIWI ICE CREAM"
+    title: "MANGO + KIWI ICE CREAM",
     price: 6.66,
+    get price() {
+      return this._price;
+    },
+    set price(value) {
+      this._price = value;
+    },
     colors: [
       {
         code: "gray",
