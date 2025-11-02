@@ -1,28 +1,94 @@
+:root{
+    --bg-1: #f3f6fb; /* page background top */
+    --bg-2: #eef4ff; /* page background bottom */
+    --card: #ffffff; /* table card */
+    --accent: #6d5df6; /* primary accent */
+    --muted: #6b7280; /* muted text */
+    --border: rgba(99,102,241,0.12);
+}
+
 a{
     position:fixed;
     top: 20px;
     right: 20px;
-}
-body{
-    background-color: rgb(0, 0, 0);
-}
-table {
-    width: 100%;
+    color: var(--accent);
+    text-decoration: none;
+    background: rgba(109,93,246,0.08);
+    padding: 8px 10px;
     border-radius: 8px;
-    overflow: hidden;
-    background-color: rgb(191, 185, 255);
+    font-weight: 600;
 }
-th {
-    border: 1px solid #000000;
-    padding: 12px;
-    background-color: #2b32ff75;
-    color: rgb(111, 63, 255);
+
+body{
+    margin: 0;
+    padding: 40px 24px;
+    background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    color: #111827;
 }
-td {
-    border: 0.5px solid #76a4e4;
-}
+
+/* page heading */
 h2 {
-    font-size: 28px;
-    color: #ffffff;
+    font-size: 26px;
+    color: var(--accent);
     text-align: center;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+/* table card */
+table {
+    width: min(1100px, 98%);
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+    border: 1px solid var(--border);
+    border-collapse: collapse;
+}
+
+th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #111827;
+    background: linear-gradient(90deg, rgba(109,93,246,0.06), rgba(109,93,246,0.02));
+    border-bottom: 1px solid #eef2ff;
+}
+
+td {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--muted);
+    border-bottom: 1px solid #f1f5f9;
+}
+
+tr:nth-child(even) td{
+    background: #fbfdff;
+}
+
+tr:hover td{
+    background: #f8faff;
+}
+
+/* serial number column */
+td:first-child, th:first-child{
+    width: 60px;
+    text-align: center;
+}
+
+/* responsive tweaks */
+@media (max-width: 720px){
+    th, td{ padding: 10px 12px; font-size: 13px }
+    table { width: 98%; }
+    body { padding: 20px 10px }
+}
+
+/* empty state */
+.no-data{
+    text-align:center;
+    padding: 24px;
+    color: var(--muted);
 }
