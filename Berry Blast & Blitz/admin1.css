@@ -4,7 +4,7 @@
     --card: #ffffff; /* table card */
     --accent: #6d5df6; /* primary accent */
     --muted: #6b7280; /* muted text */
-    --border: rgba(99,102,241,0.12);
+    --border: rgba(219, 48, 193, 0.895);
 }
 
 a{
@@ -13,7 +13,7 @@ a{
     right: 20px;
     color: var(--accent);
     text-decoration: none;
-    background: rgba(109,93,246,0.08);
+    background: rgba();
     padding: 8px 10px;
     border-radius: 8px;
     font-weight: 600;

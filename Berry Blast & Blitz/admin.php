@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Management</title>
+    <title>Payments Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin1.css">
 </head>
 <body>
-    <h2>Payments</h2>
+    <h2>Payment</h2>
     <table>
         <tr>
             <th>No.</th>

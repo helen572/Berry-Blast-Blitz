@@ -192,5 +192,16 @@
         exit;
     }
     
-    // ...existing code...
+    $payment_success = true; // Replace with actual payment processing logic
+
+    if ($payment_success) {
+        // Successful payment response
+        echo json_encode(['success' => true, 'message' => 'Order processed successfully.']);
+    } else {
+        // Failed payment response
+        echo json_encode(['success' => false, 'message' => 'Payment validation failed. Please check your details.']);
+    }
+
+    exit;
 ?>
+

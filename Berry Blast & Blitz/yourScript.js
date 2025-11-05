@@ -6,16 +6,10 @@ const products = [
     id: 1,
     title: "BOBA ICE CREAM",
     price: 6,
-    get price() {
-      return this._price;
-    },
-    set price(value) {
-      this._price = value;
-    },
     colors: [
       {
         code: "black",
-        img: "./img/product/Boba ice cream.png"
+        img: "./img/Product/Boba ice cream.png"
       },
     ],
   },
@@ -23,16 +17,10 @@ const products = [
     id: 2,
     title: "BOBA PASSION FRUIT JUICE",
     price: 5,
-    get price() {
-      return this._price;
-    },
-    set price(value) {
-      this._price = value;
-    },
     colors: [
       {
         code: "lightgray",
-        img: "./img/product/Boba Passion Fruit Juice.png"
+        img: "./img/Product/Boba Passion Fruit Juice.png"
       },
     ],
   },
@@ -40,16 +28,10 @@ const products = [
     id: 3,
     title: "BOBA + CHOCOLATE ICE CREAM",
     price: 9.99,
-    get price() {
-      return this._price;
-    },
-    set price(value) {
-      this._price = value;
-    },
     colors: [
       {
         code: "lightgray",
-        img: "./img/product/Boba + Chocolate Ice Cream.png"
+        img: "./img/Product/Boba + Chocolate Ice Cream.png"
       },
     ],
   },
@@ -57,12 +39,6 @@ const products = [
     id: 4,
     title: "LEMONADE JUICE",
     price: 4.50,
-    get price() {
-      return this._price;
-    },
-    set price(value) {
-      this._price = value;
-    },
     colors: [
       {
         code: "black",
@@ -74,12 +50,6 @@ const products = [
     id: 5,
     title: "MANGO + KIWI ICE CREAM",
     price: 6.66,
-    get price() {
-      return this._price;
-    },
-    set price(value) {
-      this._price = value;
-    },
     colors: [
       {
         code: "gray",
@@ -110,34 +80,36 @@ menuItems.forEach((item, index) => {
     currentProductPrice.textContent = "RM" + choosenProduct.price;
     currentProductImg.src = choosenProduct.colors[0].img;
 
-    //assing new colors
-    currentProductColors.forEach((color, index) => {
-      color.style.backgroundColor = choosenProduct.colors[index].code;
+    //assign new colors
+    currentProductColors.forEach((color, colorIndex) => {
+      if (choosenProduct.colors[colorIndex]) {
+        color.style.backgroundColor = choosenProduct.colors[colorIndex].code;
+        color.style.display = "inline-block";
+      } else {
+        color.style.display = "none";
+      }
     });
   });
 });
 
 currentProductColors.forEach((color, index) => {
   color.addEventListener("click", () => {
-    currentProductImg.src = choosenProduct.colors[index].img;
+    if (choosenProduct.colors[index]) {
+      currentProductImg.src = choosenProduct.colors[index].img;
+    }
   });
 });
 
 currentProductSizes.forEach((size, index) => {
   size.addEventListener("click", () => {
-    currentProductSizes.forEach((size) => {
-      size.style.backgroundColor = "white";
-      size.style.color = "black";
+    currentProductSizes.forEach((s) => {
+      s.style.backgroundColor = "white";
+      s.style.color = "black";
     });
     size.style.backgroundColor = "black";
     size.style.color = "white";
   });
 });
-  userIcon.addEventListener('click', function() {
-                authModal.style.display = 'block';
-                // Always reset to Login mode when opening for simplicity
-                toggleAuthMode(false); 
-            });
 
 const productButton = document.querySelector(".productButton");
 const payment = document.querySelector(".payment");
