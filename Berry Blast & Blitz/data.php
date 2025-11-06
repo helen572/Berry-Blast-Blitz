@@ -192,16 +192,124 @@
         exit;
     }
     
-    $payment_success = true; // Replace with actual payment processing logic
+    // Create payment table if it doesn't exist
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "Berry Blast & Blitz";
 
-    if ($payment_success) {
-        // Successful payment response
-        echo json_encode(['success' => true, 'message' => 'Order processed successfully.']);
-    } else {
-        // Failed payment response
-        echo json_encode(['success' => false, 'message' => 'Payment validation failed. Please check your details.']);
+    $conn = new mysqli($servername, $username, $password, $database);
+    if ($conn->connect_error) {
+        echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+        exit;
     }
 
+    // Create payment table
+    $create_payment_sql = "CREATE TABLE IF NOT EXISTS `payment` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        phone VARCHAR(20) NOT NULL,
+        address TEXT NOT NULL,
+        card_number VARCHAR(16) NOT NULL,
+        expiry_month VARCHAR(2) NOT NULL,
+        expiry_year VARCHAR(4) NOT NULL,
+        cvv VARCHAR(3) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    $conn->query($create_payment_sql);
+
+    // Get form data and add debug logging
+    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+    $address = isset($_POST['address']) ? trim($_POST['address']) : '';
+    $card_number = isset($_POST['card_number']) ? trim($_POST['card_number']) : '';
+    $expiry_month = isset($_POST['expiry_month']) ? trim($_POST['expiry_month']) : '';
+    $expiry_year = isset($_POST['expiry_year']) ? trim($_POST['expiry_year']) : '';
+    $cvv = isset($_POST['cvv']) ? trim($_POST['cvv']) : '';
+    
+    // Debug log
+    error_log("Payment Data Received - CVV: " . $cvv . ", Length: " . strlen($cvv));
+
+    // Validate required fields
+    if (empty($name) || empty($phone) || empty($address) || empty($card_number) || 
+        empty($expiry_month) || empty($expiry_year) || empty($cvv)) {
+        echo json_encode(['success' => false, 'message' => 'All fields are required']);
+        $conn->close();
+        exit;
+    }
+
+    // Basic validation
+    if (strlen($card_number) != 16 || !is_numeric($card_number)) {
+        echo json_encode(['success' => false, 'message' => 'Invalid card number']);
+        $conn->close();
+        exit;
+    }
+
+    // Debug log before cleaning
+    error_log("CVV before cleaning: '" . $cvv . "'");
+    
+    // Clean the CVV - remove any spaces or non-numeric characters
+    $cvv = preg_replace('/[^0-9]/', '', $cvv);
+    
+    // Debug log after cleaning
+    error_log("CVV after cleaning: '" . $cvv . "', Length: " . strlen($cvv));
+    
+    if (empty($cvv)) {
+        echo json_encode(['success' => false, 'message' => 'CVV is required']);
+        $conn->close();
+        exit;
+    }
+    
+    if (strlen($cvv) != 3) {
+        echo json_encode(['success' => false, 'message' => 'CVV must be exactly 3 digits (got ' . strlen($cvv) . ' digits)']);
+        $conn->close();
+        exit;
+    }
+    
+    if (!is_numeric($cvv)) {
+        echo json_encode(['success' => false, 'message' => 'CVV must contain only numbers']);
+        $conn->close();
+        exit;
+    }
+
+    if (!is_numeric($expiry_month) || $expiry_month < 1 || $expiry_month > 12) {
+        echo json_encode(['success' => false, 'message' => 'Invalid expiry month']);
+        $conn->close();
+        exit;
+    }
+
+    if (!is_numeric($expiry_year) || $expiry_year < date('Y') || $expiry_year > date('Y') + 10) {
+        echo json_encode(['success' => false, 'message' => 'Invalid expiry year']);
+        $conn->close();
+        exit;
+    }
+
+    // Insert payment data
+    $stmt = $conn->prepare("INSERT INTO payment (name, phone, address, card_number, expiry_month, expiry_year, cvv) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    
+    if ($stmt) {
+        $stmt->bind_param("sssssss", $name, $phone, $address, $card_number, $expiry_month, $expiry_year, $cvv);
+        
+        if ($stmt->execute()) {
+            // Clear the cart after successful payment
+            $clearCartStmt = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
+            if ($clearCartStmt) {
+                $user_id = 1; // Using the default user_id as before
+                $clearCartStmt->bind_param("i", $user_id);
+                $clearCartStmt->execute();
+                $clearCartStmt->close();
+            }
+            
+            echo json_encode(['success' => true, 'message' => 'Payment processed successfully! Thank you for your order.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to process payment. Please try again.']);
+        }
+        $stmt->close();
+    } else {
+        echo json_encode(['success' => false, 'message' => 'System error. Please try again later.']);
+    }
+
+    $conn->close();
     exit;
 ?>
 
