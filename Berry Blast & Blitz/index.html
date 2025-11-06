@@ -1928,7 +1928,7 @@
             <div class="footerRight">
                 <h1 class="fMenuTitle">Go go go! Subscribe to our Berry Blast & Blitz updates!</h1>
                 <input type="email" placeholder="your@email.com" class="fInput">
-                <button class="fButton">Subscribe Now!!</button>
+                <button onclick="SubsMessage()" class="fButton">Subscribe Now!!</button>
                 <div class="fIcons">
                     <div class="fIcon"><i class="fa-brands fa-facebook-f"></i></div>
                     <div class="fIcon"><i class="fa-brands fa-twitter"></i></div>
@@ -2003,6 +2003,11 @@
             },
             retina_detect: true
         });
+    </script>
+    <script>
+        function SubsMessage() {
+            alert ("Subscribe successfully. Thank You for Your Support!")
+        }
     </script>
     <script>
         
@@ -2392,4 +2397,5 @@
                 <!-- Inline legacy login script removed to allow centralized `auth.js` to handle login using the Users database. -->
 </body>
 </html>
+
 
