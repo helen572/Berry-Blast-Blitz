@@ -1586,6 +1586,23 @@
             }
         }
 
+        /* Custom style for the subscribed state (Grey-Purple) */
+        .fButton.subscribed {
+            background: #7a6a9b; /* A medium grey-purple color */
+            color: var(--white);
+            cursor: default;
+            box-shadow: none;
+            /* Ensure the button cannot be clicked again */
+            pointer-events: none;
+            /* Override any hover animation on the main button */
+            transform: none; 
+        }
+
+/* Also remove the special ::before hover effect if it exists */
+        .fButton.subscribed::before {
+            content: none;
+        }
+
         @media (max-width: 576px) {
             .menuItem {
                 font-size: 14px;
@@ -1928,7 +1945,7 @@
             <div class="footerRight">
                 <h1 class="fMenuTitle">Go go go! Subscribe to our Berry Blast & Blitz updates!</h1>
                 <input type="email" placeholder="your@email.com" class="fInput">
-                <button class="fButton">Subscribe Now!!</button>
+                <button id="subscribeButton" onclick="SubsMessage(this)" class="fButton">Subscribe Now!!</button>                
                 <div class="fIcons">
                     <div class="fIcon"><i class="fa-brands fa-facebook-f"></i></div>
                     <div class="fIcon"><i class="fa-brands fa-twitter"></i></div>
@@ -2003,6 +2020,22 @@
             },
             retina_detect: true
         });
+    </script>
+    <script>
+        function SubsMessage(buttonElement) {
+      // 1. Show the pop-up message
+      alert("Go go go! You have successfully subscribed to Berry Blast & Blitz updates!");
+
+      // 2. Change the button's text content
+      buttonElement.textContent = "Subscribed";
+
+      // 3. Add the new CSS class to apply the grey-purple style
+      buttonElement.classList.add('subscribed');
+      
+      // (Optional but Recommended) Prevent further form submission
+      buttonElement.disabled = true;
+    }
+
     </script>
     <script>
         
